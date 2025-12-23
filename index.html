@@ -1,1 +1,532 @@
-<!DOCTYPE html> <html lang="es"> <head> <meta charset="utf-8" /> <meta name="viewport" content="width=device-width,initial-scale=1" /> <!-- Font Awesome CDN --> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> <title>PRESENTACIÓN CORPORATIVA - Animación</title> <style> :root{ --blue-dark: #003366; --blue-mid: #098FC8; } body{ margin:0; font-family: Arial, sans-serif; background:#f0f0f0; } /* ===== BANNER ===== */ .banner{ position:relative; width:100%; height:150px; overflow:hidden; background: url('back.jpg') center/cover no-repeat; } .logo{ position:absolute; top:50%; transform:translateY(-50%); transition: right 1s ease, opacity 1s ease, transform 1s ease; will-change: right, opacity, transform; } #logo { position: absolute; top: 50%; left: -360px; /* fuera de pantalla izquierda */ width: 350px; transform: translateY(-50%); opacity: 0; transition: left 1s ease, opacity 0.5s ease, transform 0.5s ease; } /* ===== FRANJAS ===== */ .franja1{ background: var(--blue-dark); color: #fff; text-align:center; font-weight:700; padding: 12px 0; font-size: 1.6rem; } .franja2{ height:18px; background: var(--blue-mid); } /* ===== CONTENIDO ===== */ .contenedor{ display:flex; gap:0; min-height:580px; } .menu{ width: 26%; background:#eaeef6; padding:22px; box-sizing:border-box; border-right:1px solid #ddd; } .menu h2{ margin:0 0 14px 0; color:var(--blue-dark); } .menu button{ display:block; width:100%; padding:10px 12px; margin:8px 0; background:var(--blue-mid); color:white; border:none; border-radius:6px; cursor:pointer; font-weight:700; text-align:left; } .menu button:hover{ background: var(--blue-dark); } .contenido{ flex:1; padding:28px; background:#fff; box-sizing:border-box; } .contenido h1{ color:var(--blue-dark); margin-top:0; } .info-section{ display:flex; align-items:flex-start; gap:18px; margin-bottom:26px; padding-bottom:16px; border-bottom:1px solid #eee; } .info-text{ flex:1; } .info-text h3{ margin:0 0 6px 0; color:var(--blue-mid); } .info-text p{ margin:0; color:#333; line-height:1.45; } .info-img{ width:340px; flex-shrink:0; } .info-img img{ width:100%; border-radius:8px; display:block; } /* pequeño responsive */ @media (max-width:900px){ .contenedor{ flex-direction:column; } .menu{ width:100%; display:flex; overflow-x:auto; gap:8px; } .menu button{ flex:0 0 auto; width:auto; white-space:nowrap; } .info-img{ width:140px; } } </style> </head> <body> <div class="banner" aria-hidden="true"> <!-- usá tus rutas de imágenes --> <img id="logo" class="logo" src="logonyl.png" alt="Logo NYL"> </div> <div class="franja1">PRESENTACIÓN CORPORATIVA</div> <div class="franja2"></div> <div class="contenedor"> <aside class="menu" aria-label="Menú de secciones"> <h2>LO QUE TENES QUE SABER:</h2> <button onclick="mostrar('inicial')">PRESENTACIÓN INICIAL</button> <button onclick="mostrar('calidad')">POLÍTICA DE CALIDAD Y CUMPLIMIENTO</button> <button onclick="mostrar('servicios')">NUESTROS SERVICIOS</button> <button onclick="mostrar('flota')">NUESTRA FLOTA</button> <button onclick="mostrar('comex')">DEPARTAMENTO DE COMEX</button> <button onclick="mostrar('filosofia')">FILOSOFÍA DE TRABAJO</button> </aside> <main id="contenido" class="contenido" role="main"> <h1>Selecciona una sección</h1> <p>Haz clic en los botones de la izquierda para ver la información relacionada en este panel.</p> </main> </div> <script> /* ====================== Animación del banner ====================== */ const logo = document.getElementById('logo'); function startSequence(){ // 1️⃣ Reset: asegurar que logo está fuera de pantalla izquierda y oculto logo.style.transition = 'none'; // desactivar transiciones momentáneamente logo.style.left = '-360px'; logo.style.opacity = 0; logo.style.transform = 'translateY(-50%) scale(0.95)'; // forzar reflow void logo.offsetWidth; // 2️⃣ Activar transición para entrada logo.style.transition = 'left 1s ease, opacity 0.5s ease, transform 0.5s ease'; // 3️⃣ Entrada al centro setTimeout(() => { logo.style.left = '50%'; logo.style.transform = 'translate(-50%, -50%) scale(1)'; logo.style.opacity = 1; }, 50); // pequeño delay para asegurar reflow // 4️⃣ Titileo 5 veces setTimeout(() => { let count = 0; const blinkInterval = setInterval(() => { logo.style.opacity = logo.style.opacity == 1 ? 0.5 : 1; count++; if(count >= 10){ // 5 titileos clearInterval(blinkInterval); // 5️⃣ Salida hacia la derecha logo.style.left = '120%'; logo.style.opacity = 0; logo.style.transform = 'translateY(-50%) scale(0.95)'; // 6️⃣ Esperar 2s antes de reiniciar setTimeout(startSequence, 2000); } }, 600); }, 1200); // esperar a que llegue al centro } // iniciar animación window.addEventListener('load', () => setTimeout(startSequence, 200)); /* ====================== Contenido dinámico ====================== */ function mostrar(seccion){ const contenido = document.getElementById('contenido'); let html = ''; switch(seccion){ case 'inicial': html = <h1 style="text-align:center; color:#003366; margin-bottom:30px;">PRESENTACIÓN CORPORATIVA – N&L GLOBAL</h1> <div class="info-section" style="display:flex; flex-wrap:wrap; gap:40px; align-items:center; justify-content:center;"> <div class="info-text" style="flex:1 1 500px; min-width:300px; line-height:1.7; color:#333; font-size:16px;"> <h3 style="color:#0055aa; margin-bottom:20px;">Quiénes somos</h3> <p>Somos N&L Global, una empresa especializada en servicios de logística y comercio internacional, comprometida en brindar soluciones integrales a diversas industrias.</p> <br> <p>Nuestro enfoque se centra en diseñar y ejecutar estrategias logísticas adaptadas a las necesidades específicas de cada cliente, comprendiendo la complejidad que implica el flujo dentro de la cadena de suministro entre empresa y cliente final.</p> <p>Sabemos que cada industria posee sus propios procesos, sistemas y desafíos, por eso desarrollamos servicios flexibles, eficientes y personalizados que acompañan su crecimiento y optimizan su operación.</p> <br> <p>En un entorno global cada vez más dinámico, donde la rapidez y la eficiencia son esenciales, trabajamos día a día en la modernización e integración de nuestra flota, implementando nuevas tecnologías informáticas y modelos avanzados de supply chain, bajo principios de estandarización y mejora continua.</p> <br> <p style="font-weight:bold;">Nuestro objetivo es claro: impulsar la competitividad de nuestros clientes a través de soluciones logísticas confiables, innovadoras y sustentables.</p> </div> <div class="info-img" style="flex:1 1 400px; min-width:300px; text-align:center;"> <img src="logonyl.png" alt="Presentación corporativa NYL Global" loading="lazy" style="max-width:100%; height:auto; border-radius:10px; box-shadow:0 4px 15px rgba(0,0,0,0.2);"> </div> </div>; break; case 'filosofia': html = <h1>FILOSOFÍA DE TRABAJO</h1> <div class="info-section" style="display:flex; flex-wrap:wrap; gap:40px; align-items:center; justify-content:center;"> <div class="info-text" style="flex:1 1 500px; min-width:300px; line-height:1.7; color:#333; font-size:16px;"> <p style="font-style:italic; color:#777; font-size:16px; margin-bottom:25px;"> “Somos lo que hacemos día a día; de modo que la excelencia no es un acto, sino un hábito.” – Aristóteles </p> <p>Después de años de dedicación y trabajo constante, N&L Global se encuentra en un proyecto de expansión, reinventándose, reorganizándose y cambiando el foco de trabajo para adaptarse a los desafíos del mercado actual.</p> <br> <p>Para lograrlo, hemos adoptado metodologías reconocidas a nivel internacional como <strong>5S</strong> y <strong>Kaizen</strong>. Estas prácticas nos permiten mantener un entorno de trabajo ordenado, seguro y eficiente, promoviendo la mejora continua en todos los aspectos de nuestra organización.</p> <br> <p>La metodología <strong>5S</strong> nos ayuda a organizar espacios, procesos y recursos, garantizando que cada área —oficinas, taller y flota de vehículos— funcione de manera óptima. Por su parte, <strong>Kaizen</strong> nos impulsa a buscar constantemente pequeñas mejoras en nuestros servicios, procesos internos y en la atención a nuestros clientes.</p> <br> <p>Aplicamos estas metodologías de manera integral: nuestro personal se capacita continuamente, los servicios se ajustan para maximizar eficiencia y seguridad, y nuestra flota se mantiene en condiciones óptimas. Así, cada día reforzamos la excelencia, la calidad y la confiabilidad que nuestros clientes esperan de NYL Global.</p> </div> <div class="info-img" style="flex:1 1 400px; min-width:300px; text-align:center;"> <img src="5S.jpg" alt="Filosofía de trabajo N&L Global" loading="lazy" style="max-width:100%; height:auto; border-radius:10px; box-shadow:0 4px 15px rgba(0,0,0,0.2);"> </div> </div>; break; case 'calidad': html = <h1>🏅 POLÍTICA DE CALIDAD Y CUMPLIMIENTO</h1> <div class="info-section"> <div class="info-text"> <p>En N&L Global asumimos el compromiso de brindar servicios logísticos de excelencia, garantizando la seguridad, puntualidad y trazabilidad de cada operación.</p> <p>Nuestra política de calidad se basa en la mejora continua de nuestros procesos, priorizando la satisfacción del cliente, la eficiencia operativa y el cumplimiento estricto de la normativa vigente.</p> <p>Aplicamos procedimientos estandarizados en todas las etapas del servicio —planificación, ejecución, control y entrega—, lo que nos permite asegurar consistencia, confiabilidad y transparencia en cada gestión.</p> <h3>Pilares principales:</h3> <ul> <li>Cumplimiento normativo y legal conforme a las regulaciones nacionales e internacionales del transporte.</li> <li>Mantenimiento de documentación actualizada de flota, conductores y habilitaciones.</li> <li>Auditorías internas y externas periódicas para verificar el cumplimiento de los estándares de calidad.</li> <li>Gestión ambiental y de seguridad laboral, promoviendo prácticas responsables y sostenibles.</li> <li>Retroalimentación constante con nuestros clientes, orientada a optimizar la eficiencia del servicio.</li> </ul> <p>Nuestro objetivo es consolidarnos como un aliado estratégico de confianza, garantizando operaciones seguras, eficientes y alineadas con las más altas exigencias del mercado logístico.</p> </div> <div class="info-img"> <img src="calidad.PNG" alt="Política de calidad y cumplimiento" loading="lazy"> </div> </div>; break; case 'servicios': html = <h1>NUESTROS SERVICIOS</h1> <!-- 1. Soluciones de Transporte Terrestre y Distribución --> <div class="info-section"> <div class="info-text"> <h3><i class="fa-solid fa-truck-moving" style="color: #003366;"></i> Soluciones de Transporte Terrestre y Distribución</h3> <p>En N&L Global nos especializamos en brindar soluciones de transporte adaptadas a las necesidades de cada cliente, combinando <strong>eficiencia, seguridad y puntualidad</strong>.</p> <h4><i class="fa-solid fa-truck" ></i> Transporte de larga distancia</h4> <p>Traslado de carga pesada dentro del territorio nacional, conectando distintos puntos del país. Origen principal en <strong>Buenos Aires</strong> con posibilidad de entregar a múltiples clientes en una misma ruta, optimizando tiempos y costos.</p> <h4><i class="fa-solid fa-truck-front"></i> Servicio de tracción de semirremolques</h4> <p>Para empresas que ya cuentan con semirremolques cargados, ofrecemos el servicio de <strong>tracción</strong>, garantizando rapidez y economía aprovechando los recursos existentes del cliente.</p> <h4><i class="fa-solid fa-truck-fast"></i> Distribución y transporte local</h4> <p>Entrega de pedidos dentro del <strong>AMBA</strong>, desde depósitos o empresas hacia los clientes. Posibilidad de entregar a múltiples clientes en una misma ruta, optimizando recorridos.</p> <h4><i class="fa-solid fa-map-location-dot"></i> Última milla</h4> <p>Distribución de volúmenes de <strong>paquetería</strong>, incluyendo envío, colecta y devoluciones. Generamos rutas óptimas que inician y finalizan en su depósito. Ofrecemos integración con sistemas de administración propios o adaptamos los existentes del cliente.</p> <h4><i class="fa-solid fa-handshake-angle"></i> Conexión con transportistas expresos</h4> <p>Coordinamos entregas y retiros con <strong>líneas de transporte nacionales, aéreas o navales</strong>. Retiro o entrega de carga en terminales, correos, puertos y aeropuertos, facilitando la logística intermodal.</p> </div> <div class="info-img"><img src="servicios.png" alt="Servicios de transporte" loading="lazy"></div> </div> <!-- 2. Planificación de rutas y entregas --> <div class="info-section"> <div class="info-text"> <h3><i class="fa-solid fa-route" style="color: #003366;"></i> Planificación de rutas y entregas</h3> <p>Diseñamos rutas estratégicas que optimizan tiempos y recursos, considerando la mejor secuencia de paradas y requerimientos específicos de cada cliente, garantizando un servicio organizado y confiable.</p> </div> <div class="info-text"> <h3><i class="fa-solid fa-folder-open" style="color: #003366;"></i> Gestión de Documentación</h3> <p>Tanto nuestros recursos vehiculares como nuestro personal cuentan con toda la documentación reglamentaria vigente, garantizando operaciones legales, seguras y responsables.</p> <p>Nuestro departamento administrativo realiza auditorías diarias para verificar el cumplimiento normativo y mantener registros actualizados.</p> <p>Estamos capacitados para gestionar documentación a través de plataformas como <strong>Certronic, SICOP, Nemsis, SGC, GCG Control</strong>, adaptándonos a los sistemas de control de cada cliente.</p> </div> <div class="info-img"><img src="monitoreo.png" alt="Planificación de rutas" loading="lazy"></div> </div> <!-- 4. Canales de Comunicación Directa --> <div class="info-section"> <div class="info-text"> <h3><i class="fa-solid fa-address-book" style="color: #003366;"></i> Canales de Comunicación Directa</h3> <p>Cada cliente cuenta con un <strong>representante exclusivo</strong>, responsable de ofrecer asistencia continua, seguimiento operativo y respuesta inmediata ante cualquier consulta.</p> <p>A través de <strong>teléfono, correo electrónico, mensajería instantánea y plataformas digitales</strong>, garantizamos atención ágil y resolutiva.</p> <p>Además, contamos con un <strong>canal de feedback permanente</strong>, donde los clientes pueden compartir sugerencias, valoraciones y observaciones sobre el servicio, permitiendo mejorar continuamente nuestros procesos.</p> <p>Nuestro compromiso es estar siempre cerca de nuestros clientes, escucharlos y evolucionar junto a ellos.</p> </div> <div class="info-img"><img src="canales.png" alt="Canales de comunicación" loading="lazy"></div> </div> ; break; case 'flota': html = <h1>NUESTRA FLOTA</h1> <!-- 1. Composición de Unidades --> <div class="info-section"> <div class="info-text"> <h3> <i class="fa-solid fa-truck-moving" style="color: #003366;"></i> COMPOSICION DE UNIDADES</h3> <p>Nuestra flota está compuesta por vehículos preparados para brindar servicios tanto de larga como de corta distancia, cubriendo diferentes tipos de operaciones logísticas y necesidades de transporte.</p> <ul> <li>Camiones de alto porte</li> <li>Arañas y porta-jumbo</li> <li>Chasis baranda volcable y Chasis con caja Siders</li> <li>Furgones refrigerados</li> <li>Semirremolques playos y con baranda volcable</li> </ul> <p>Gracias a esta diversidad de unidades, podemos adaptarnos a distintos tipos de carga, garantizando eficiencia, seguridad y cumplimiento en cada entrega.</p> </div> <div class="info-img"> <img src="flota.png" alt="Nuestra flota de camiones y vehículos logísticos" loading="lazy"> </div> </div> <!-- 2. Estado de las Unidades --> <div class="info-section"> <div class="info-text"> <h3><i class="fa-solid fa-gear"style="color: #003366;"></i> ESTADO Y MANTENIMIENTO</h3> <p>Contamos con una flota moderna, compuesta por unidades modelo 2010 en adelante, todas en excelente estado operativo y habilitadas para el ingreso y movimiento en las principales plantas y centros logísticos del país.</p> <p>Aplicamos un plan de mantenimiento predictivo y preventivo, con inspecciones y reparaciones programadas que nos permiten anticipar fallas, minimizar tiempos de inactividad y evitar retrasos en las entregas, asegurando un flujo operativo continuo y confiable.</p> </div> <div class="info-img"> <img src="mecanica.png" alt="Nuestra flota de camiones y vehículos logísticos" loading="lazy"> </div> </div> <!-- 3. Seguridad Operativa --> <div class="info-section"> <div class="info-text"> <h3><i class="fa-solid fa-shield-halved" style="color: #003366;"></i> SEGURIDAD OPERATIVA</h3> <p>Todas nuestras unidades cuentan con sistemas de monitoreo satelital en tiempo real, lo que nos permite controlar la ubicación, velocidad, paradas y desvíos de ruta durante todo el trayecto.</p> <p>El seguimiento se realiza mediante plataformas de rastreo GPS y comunicación constante con el área de tráfico, asegurando supervisión continua y respuesta inmediata ante cualquier eventualidad.</p> <ul> <li>Control en línea del estado de la flota</li> <li>Alertas automáticas ante detenciones no programadas, aperturas de puertas o desvíos de ruta</li> <li>Historial detallado de recorridos y tiempos de tránsito</li> <li>Reportes automáticos de rendimiento y seguridad</li> </ul> <p>Nuestros conductores reciben capacitaciones permanentes en conducción segura, protocolos de emergencia y normativa vial, fomentando una cultura de prevención y responsabilidad en cada operación.</p> <p>Gracias a esta política integral de seguridad operativa, garantizamos la trazabilidad de las cargas, la protección de los activos y la tranquilidad de nuestros clientes durante todo el proceso logístico.</p> </div> <div class="info-img"> <img src="SATELITE.png" alt="Nuestra flota de camiones y vehículos logísticos" loading="lazy"> </div> </div> <!-- 3. Cargas Peligrosas --> <div class="info-section"> <div class="info-text"> <h3><i class="fa-solid fa-skull-crossbones" style="color: #003366;"></i> CARGAS PELIGROSAS</h3> <p>Contamos con <strong>unidades y conductores habilitados para el transporte de cargas peligrosas</strong>, cumpliendo con todas las normativas nacionales e internacionales vigentes.</p> <p>Nuestras unidades están <strong>equipadas con los elementos de seguridad reglamentarios</strong>, señalización adecuada y documentación actualizada exigida por la autoridad competente.</p> <ul> <li>Vehículos habilitados y equipados según normativa ADR/MERCOSUR</li> <li>Documentación y señalización reglamentaria en cada unidad</li> <li>Supervisión constante del trayecto mediante monitoreo satelital</li> <li>Protocolos de emergencia y respuesta inmediata ante incidentes</li> </ul> <p>Nuestros conductores reciben <strong>capacitaciones periódicas</strong> en manipulación segura, conducción preventiva y actuación ante emergencias, garantizando el manejo responsable de cada tipo de material transportado.</p> <p>De esta manera, aseguramos un <strong>servicio confiable, seguro y trazable</strong>, priorizando la protección de las personas, el medio ambiente y los bienes de nuestros clientes.</p> </div> <div class="info-img"> <img src="cargaspel.png" alt="Transporte de cargas peligrosas con unidades habilitadas" loading="lazy"> </div> </div> ; break; case 'comex': html = <h1>DEPARTAMENTO DE COMEX</h1> <!-- 1. Introducción --> <div class="info-section"> <div class="info-text"> <h3><i class="fa-solid fa-earth-americas"style="color: #003366;"></i> Logística Internacional</h3> <p>Facilitamos operaciones de comercio exterior, asegurando eficiencia y cumplimiento en cada etapa.</p> </div> </div> <!-- 2. Exportación --> <div class="info-section"> <div class="info-img"> <img src="comex.jpg" alt="Departamento de Comex" loading="lazy"> </div> <div class="info-text"> <h3><i class="fa-solid fa-ship"style="color: #003366;"></i> Exportación</h3> <ul> <li>Asesoramiento integral.</li> <li>Inscripción en el registro de exportadores e importadores.</li> <li>Asesoramiento aduanero y clasificación arancelaria.</li> <li>Oficialización de permisos de embarque.</li> <li>Confección, presentación de documentación aduanera y liberación de la mercadería.</li> <li>Coordinación, supervisión y control de cargas.</li> <li>Envío de muestras.</li> <li>Autorizaciones, certificaciones y gestión de documentos relativos a la operación.</li> <li>Consolidación en planta, depósitos fiscales o terminales de carga.</li> <li>Negociación de fletes marítimos, aéreos, terrestres y multimodales, y reserva de bodega.</li> <li>Transporte desde fábrica o depósito hasta puerto o aeropuerto.</li> <li>Manejo de contenedores: alquiler, retiro, transporte, consolidado y entrega en la terminal portuaria.</li> </ul> </div> </div> <!-- 3. Importación --> <div class="info-section"> <div class="info-img"> <img src="comex 2.jpg" alt="Departamento de Comex" loading="lazy"> </div> <div class="info-text"> <h3><i class="fa-solid fa-ship"style="color: #003366;"></i> Importación</h3> <ul> <li>Asesoramiento integral.</li> <li>Inscripción en el registro de exportadores e importadores.</li> <li>Confección de costos de importación.</li> <li>Clasificación arancelaria y valoración aduanera.</li> <li>Oficialización y tramitación de todo tipo de destinaciones (SIMI, importaciones a consumo, temporales, traslados, reimportaciones, etc.).</li> <li>Seguimiento de operaciones temporales: control de saldos, vencimientos, presentación de prórrogas, etc.</li> <li>Negociación de fletes marítimos, aéreos, terrestres y reserva de bodega.</li> </ul> </div> </div>; break; case 'futuro': html = <h1>HACIA DONDE VAMOS</h1> <div class="info-section"> <div class="info-text"> <h3>Visión a futuro</h3> <p>Nos proyectamos hacia un crecimiento sostenible, integrando tecnología y compromiso ambiental en cada proceso.</p> </div> <div class="info-img"><img src="futuro.jpg" alt="Futuro"></div> </div>; break; default: html = <h1>Selecciona una sección</h1><p>Haz clic en los botones de la izquierda para ver la información.</p>; } // reemplazamos contenido contenido.innerHTML = html; } </script> </body> </html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<title>PRESENTACIÓN CORPORATIVA - Animación</title>
+<style>
+  :root{
+    --blue-dark: #003366;
+    --blue-mid: #098FC8;
+  }
+
+  body{
+    margin:0;
+    font-family: Arial, sans-serif;
+    background:#f0f0f0;
+  }
+
+  /* ===== BANNER ===== */
+  .banner{
+    position:relative;
+    width:100%;
+    height:150px;
+    overflow:hidden;
+    background: url('back.jpg') center/cover no-repeat;
+  }
+
+  .logo{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    transition: right 1s ease, opacity 1s ease, transform 1s ease;
+    will-change: right, opacity, transform;
+  }
+
+
+  #logo {
+    position: absolute;
+    top: 50%;
+    left: -360px; /* fuera de pantalla izquierda */
+    width: 350px;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: left 1s ease, opacity 0.5s ease, transform 0.5s ease;
+  }
+  /* ===== FRANJAS ===== */
+  .franja1{
+    background: var(--blue-dark);
+    color: #fff;
+    text-align:center;
+    font-weight:700;
+    padding: 12px 0;
+    font-size: 1.6rem;
+  }
+  .franja2{
+    height:18px;
+    background: var(--blue-mid);
+  }
+
+  /* ===== CONTENIDO ===== */
+  .contenedor{
+    display:flex;
+    gap:0;
+    min-height:580px;
+  }
+
+  .menu{
+    width: 26%;
+    background:#eaeef6;
+    padding:22px;
+    box-sizing:border-box;
+    border-right:1px solid #ddd;
+  }
+
+  .menu h2{
+    margin:0 0 14px 0;
+    color:var(--blue-dark);
+  }
+
+  .menu button{
+    display:block;
+    width:100%;
+    padding:10px 12px;
+    margin:8px 0;
+    background:var(--blue-mid);
+    color:white;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:700;
+    text-align:left;
+  }
+  .menu button:hover{ background: var(--blue-dark); }
+
+  .contenido{
+    flex:1;
+    padding:28px;
+    background:#fff;
+    box-sizing:border-box;
+  }
+
+  .contenido h1{
+    color:var(--blue-dark);
+    margin-top:0;
+  }
+
+  .info-section{
+    display:flex;
+    align-items:flex-start;
+    gap:18px;
+    margin-bottom:26px;
+    padding-bottom:16px;
+    border-bottom:1px solid #eee;
+  }
+
+  .info-text{
+    flex:1;
+  }
+
+  .info-text h3{ margin:0 0 6px 0; color:var(--blue-mid); }
+  .info-text p{ margin:0; color:#333; line-height:1.45; }
+
+  .info-img{
+    width:340px;
+    flex-shrink:0;
+  }
+  .info-img img{
+    width:100%;
+    border-radius:8px;
+    display:block;
+  }
+
+  /* pequeño responsive */
+  @media (max-width:900px){
+    .contenedor{ flex-direction:column; }
+    .menu{ width:100%; display:flex; overflow-x:auto; gap:8px; }
+    .menu button{ flex:0 0 auto; width:auto; white-space:nowrap; }
+    .info-img{ width:140px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="banner" aria-hidden="true">
+    <!-- usá tus rutas de imágenes -->
+    <img id="logo" class="logo" src="logonyl.png" alt="Logo NYL">
+  </div>
+
+  <div class="franja1">PRESENTACIÓN CORPORATIVA</div>
+  <div class="franja2"></div>
+
+  <div class="contenedor">
+    <aside class="menu" aria-label="Menú de secciones">
+      <h2>LO QUE TENES QUE SABER:</h2>
+      <button onclick="mostrar('inicial')">PRESENTACIÓN INICIAL</button>
+      <button onclick="mostrar('calidad')">POLÍTICA DE CALIDAD Y CUMPLIMIENTO</button>
+      <button onclick="mostrar('servicios')">NUESTROS SERVICIOS</button>
+      <button onclick="mostrar('flota')">NUESTRA FLOTA</button>
+      <button onclick="mostrar('comex')">DEPARTAMENTO DE COMEX</button>
+      <button onclick="mostrar('filosofia')">FILOSOFÍA DE TRABAJO</button>
+    </aside>
+
+    <main id="contenido" class="contenido" role="main">
+      <h1>Selecciona una sección</h1>
+      <p>Haz clic en los botones de la izquierda para ver la información relacionada en este panel.</p>
+    </main>
+  </div>
+
+<script>
+/* ======================
+   Animación del banner
+   ====================== */
+
+const logo   = document.getElementById('logo');
+
+function startSequence(){
+  // 1️⃣ Reset: asegurar que logo está fuera de pantalla izquierda y oculto
+  logo.style.transition = 'none'; // desactivar transiciones momentáneamente
+  logo.style.left = '-360px';
+  logo.style.opacity = 0;
+  logo.style.transform = 'translateY(-50%) scale(0.95)';
+  
+  // forzar reflow
+  void logo.offsetWidth;
+
+  // 2️⃣ Activar transición para entrada
+  logo.style.transition = 'left 1s ease, opacity 0.5s ease, transform 0.5s ease';
+
+  // 3️⃣ Entrada al centro
+  setTimeout(() => {
+    logo.style.left = '50%';
+    logo.style.transform = 'translate(-50%, -50%) scale(1)';
+    logo.style.opacity = 1;
+  }, 50); // pequeño delay para asegurar reflow
+
+  // 4️⃣ Titileo 5 veces
+  setTimeout(() => {
+    let count = 0;
+    const blinkInterval = setInterval(() => {
+      logo.style.opacity = logo.style.opacity == 1 ? 0.5 : 1;
+      count++;
+      if(count >= 10){ // 5 titileos
+        clearInterval(blinkInterval);
+        // 5️⃣ Salida hacia la derecha
+        logo.style.left = '120%';
+        logo.style.opacity = 0;
+        logo.style.transform = 'translateY(-50%) scale(0.95)';
+        // 6️⃣ Esperar 2s antes de reiniciar
+        setTimeout(startSequence, 2000);
+      }
+    }, 600);
+  }, 1200); // esperar a que llegue al centro
+}
+
+// iniciar animación
+window.addEventListener('load', () => setTimeout(startSequence, 200));
+
+/* ======================
+   Contenido dinámico
+   ====================== */
+function mostrar(seccion){
+  const contenido = document.getElementById('contenido');
+  let html = '';
+
+  switch(seccion){
+case 'inicial':
+  html = `
+    <h1 style="text-align:center; color:#003366; margin-bottom:30px;">PRESENTACIÓN CORPORATIVA – N&L GLOBAL</h1>
+
+    <div class="info-section" style="display:flex; flex-wrap:wrap; gap:40px; align-items:center; justify-content:center;">
+
+      <div class="info-text" style="flex:1 1 500px; min-width:300px; line-height:1.7; color:#333; font-size:16px;">
+        <h3 style="color:#0055aa; margin-bottom:20px;">Quiénes somos</h3>
+        <p>Somos N&L Global, una empresa especializada en servicios de logística y comercio internacional, comprometida en brindar soluciones integrales a diversas industrias.</p>
+    <br>
+        <p>Nuestro enfoque se centra en diseñar y ejecutar estrategias logísticas adaptadas a las necesidades específicas de cada cliente, comprendiendo la complejidad que implica el flujo dentro de la cadena de suministro entre empresa y cliente final.</p>
+        <p>Sabemos que cada industria posee sus propios procesos, sistemas y desafíos, por eso desarrollamos servicios flexibles, eficientes y personalizados que acompañan su crecimiento y optimizan su operación.</p>
+    <br>
+        <p>En un entorno global cada vez más dinámico, donde la rapidez y la eficiencia son esenciales, trabajamos día a día en la modernización e integración de nuestra flota, implementando nuevas tecnologías informáticas y modelos avanzados de supply chain, bajo principios de estandarización y mejora continua.</p>
+    <br>
+        <p style="font-weight:bold;">Nuestro objetivo es claro: impulsar la competitividad de nuestros clientes a través de soluciones logísticas confiables, innovadoras y sustentables.</p>
+      </div>
+
+      <div class="info-img" style="flex:1 1 400px; min-width:300px; text-align:center;">
+        <img src="logonyl.png" alt="Presentación corporativa NYL Global" loading="lazy" style="max-width:100%; height:auto; border-radius:10px; box-shadow:0 4px 15px rgba(0,0,0,0.2);">
+      </div>
+
+    </div>`;
+  break;
+
+
+
+case 'filosofia':
+  html = `
+    <h1>FILOSOFÍA DE TRABAJO</h1>
+
+    <div class="info-section" style="display:flex; flex-wrap:wrap; gap:40px; align-items:center; justify-content:center;">
+
+      <div class="info-text" style="flex:1 1 500px; min-width:300px; line-height:1.7; color:#333; font-size:16px;">
+        
+        <p style="font-style:italic; color:#777; font-size:16px; margin-bottom:25px;">
+          “Somos lo que hacemos día a día; de modo que la excelencia no es un acto, sino un hábito.” – Aristóteles
+        </p>
+
+        <p>Después de años de dedicación y trabajo constante, N&L Global se encuentra en un proyecto de expansión, reinventándose, reorganizándose y cambiando el foco de trabajo para adaptarse a los desafíos del mercado actual.</p>
+<br>
+        <p>Para lograrlo, hemos adoptado metodologías reconocidas a nivel internacional como <strong>5S</strong> y <strong>Kaizen</strong>. Estas prácticas nos permiten mantener un entorno de trabajo ordenado, seguro y eficiente, promoviendo la mejora continua en todos los aspectos de nuestra organización.</p>
+<br>
+        <p>La metodología <strong>5S</strong> nos ayuda a organizar espacios, procesos y recursos, garantizando que cada área —oficinas, taller y flota de vehículos— funcione de manera óptima. Por su parte, <strong>Kaizen</strong> nos impulsa a buscar constantemente pequeñas mejoras en nuestros servicios, procesos internos y en la atención a nuestros clientes.</p>
+<br>
+        <p>Aplicamos estas metodologías de manera integral: nuestro personal se capacita continuamente, los servicios se ajustan para maximizar eficiencia y seguridad, y nuestra flota se mantiene en condiciones óptimas. Así, cada día reforzamos la excelencia, la calidad y la confiabilidad que nuestros clientes esperan de NYL Global.</p>
+
+      </div>
+      <div class="info-img" style="flex:1 1 400px; min-width:300px; text-align:center;">
+        <img src="5S.jpg" alt="Filosofía de trabajo N&L Global" loading="lazy" style="max-width:100%; height:auto; border-radius:10px; box-shadow:0 4px 15px rgba(0,0,0,0.2);">
+      </div>
+
+    </div>`;
+  break;
+
+
+case 'calidad':
+  html = `
+    <h1>🏅 POLÍTICA DE CALIDAD Y CUMPLIMIENTO</h1>
+
+    <div class="info-section">
+      <div class="info-text">
+        <p>En N&L Global asumimos el compromiso de brindar servicios logísticos de excelencia, garantizando la seguridad, puntualidad y trazabilidad de cada operación.</p>
+        <p>Nuestra política de calidad se basa en la mejora continua de nuestros procesos, priorizando la satisfacción del cliente, la eficiencia operativa y el cumplimiento estricto de la normativa vigente.</p>
+        <p>Aplicamos procedimientos estandarizados en todas las etapas del servicio —planificación, ejecución, control y entrega—, lo que nos permite asegurar consistencia, confiabilidad y transparencia en cada gestión.</p>
+
+        <h3>Pilares principales:</h3>
+        <ul>
+          <li>Cumplimiento normativo y legal conforme a las regulaciones nacionales e internacionales del transporte.</li>
+          <li>Mantenimiento de documentación actualizada de flota, conductores y habilitaciones.</li>
+          <li>Auditorías internas y externas periódicas para verificar el cumplimiento de los estándares de calidad.</li>
+          <li>Gestión ambiental y de seguridad laboral, promoviendo prácticas responsables y sostenibles.</li>
+          <li>Retroalimentación constante con nuestros clientes, orientada a optimizar la eficiencia del servicio.</li>
+        </ul>
+
+        <p>Nuestro objetivo es consolidarnos como un aliado estratégico de confianza, garantizando operaciones seguras, eficientes y alineadas con las más altas exigencias del mercado logístico.</p>
+      </div>
+
+      <div class="info-img">
+        <img src="calidad.PNG" alt="Política de calidad y cumplimiento" loading="lazy">
+      </div>
+    </div>`;
+  break;
+
+
+case 'servicios':
+  html = `
+    <h1>NUESTROS SERVICIOS</h1>
+
+    <!-- 1. Soluciones de Transporte Terrestre y Distribución -->
+    <div class="info-section">
+      <div class="info-text">
+        <h3><i class="fa-solid fa-truck-moving" style="color: #003366;"></i> Soluciones de Transporte Terrestre y Distribución</h3>
+        <p>En N&L Global nos especializamos en brindar soluciones de transporte adaptadas a las necesidades de cada cliente, combinando <strong>eficiencia, seguridad y puntualidad</strong>.</p>
+
+        <h4><i class="fa-solid fa-truck" ></i> Transporte de larga distancia</h4>
+        <p>Traslado de carga pesada dentro del territorio nacional, conectando distintos puntos del país. Origen principal en <strong>Buenos Aires</strong> con posibilidad de entregar a múltiples clientes en una misma ruta, optimizando tiempos y costos.</p>
+
+        <h4><i class="fa-solid fa-truck-front"></i> Servicio de tracción de semirremolques</h4>
+        <p>Para empresas que ya cuentan con semirremolques cargados, ofrecemos el servicio de <strong>tracción</strong>, garantizando rapidez y economía aprovechando los recursos existentes del cliente.</p>
+
+        <h4><i class="fa-solid fa-truck-fast"></i> Distribución y transporte local</h4>
+        <p>Entrega de pedidos dentro del <strong>AMBA</strong>, desde depósitos o empresas hacia los clientes. Posibilidad de entregar a múltiples clientes en una misma ruta, optimizando recorridos.</p>
+
+        <h4><i class="fa-solid fa-map-location-dot"></i> Última milla</h4>
+        <p>Distribución de volúmenes de <strong>paquetería</strong>, incluyendo envío, colecta y devoluciones. Generamos rutas óptimas que inician y finalizan en su depósito. Ofrecemos integración con sistemas de administración propios o adaptamos los existentes del cliente.</p>
+
+        <h4><i class="fa-solid fa-handshake-angle"></i> Conexión con transportistas expresos</h4>
+        <p>Coordinamos entregas y retiros con <strong>líneas de transporte nacionales, aéreas o navales</strong>. Retiro o entrega de carga en terminales, correos, puertos y aeropuertos, facilitando la logística intermodal.</p>
+      </div>
+      <div class="info-img"><img src="servicios.png" alt="Servicios de transporte" loading="lazy"></div>
+    </div>
+
+    <!-- 2. Planificación de rutas y entregas -->
+    <div class="info-section">
+      <div class="info-text">
+        <h3><i class="fa-solid fa-route" style="color: #003366;"></i> Planificación de rutas y entregas</h3>
+        <p>Diseñamos rutas estratégicas que optimizan tiempos y recursos, considerando la mejor secuencia de paradas y requerimientos específicos de cada cliente, garantizando un servicio organizado y confiable.</p>
+      </div>
+       <div class="info-text">
+        <h3><i class="fa-solid fa-folder-open" style="color: #003366;"></i> Gestión de Documentación</h3>
+        <p>Tanto nuestros recursos vehiculares como nuestro personal cuentan con toda la documentación reglamentaria vigente, garantizando operaciones legales, seguras y responsables.</p>
+        <p>Nuestro departamento administrativo realiza auditorías diarias para verificar el cumplimiento normativo y mantener registros actualizados.</p>
+        <p>Estamos capacitados para gestionar documentación a través de plataformas como <strong>Certronic, SICOP, Nemsis, SGC, GCG Control</strong>, adaptándonos a los sistemas de control de cada cliente.</p>
+      </div>
+      <div class="info-img"><img src="monitoreo.png" alt="Planificación de rutas" loading="lazy"></div>
+    </div>
+
+
+
+    <!-- 4. Canales de Comunicación Directa -->
+    <div class="info-section">
+      <div class="info-text">
+        <h3><i class="fa-solid fa-address-book" style="color: #003366;"></i> Canales de Comunicación Directa</h3>
+        <p>Cada cliente cuenta con un <strong>representante exclusivo</strong>, responsable de ofrecer asistencia continua, seguimiento operativo y respuesta inmediata ante cualquier consulta.</p>
+        <p>A través de <strong>teléfono, correo electrónico, mensajería instantánea y plataformas digitales</strong>, garantizamos atención ágil y resolutiva.</p>
+        <p>Además, contamos con un <strong>canal de feedback permanente</strong>, donde los clientes pueden compartir sugerencias, valoraciones y observaciones sobre el servicio, permitiendo mejorar continuamente nuestros procesos.</p>
+        <p>Nuestro compromiso es estar siempre cerca de nuestros clientes, escucharlos y evolucionar junto a ellos.</p>
+      </div>
+      <div class="info-img"><img src="canales.png" alt="Canales de comunicación" loading="lazy"></div>
+    </div>
+  `;
+  break;
+
+
+
+case 'flota':
+  html = `
+    <h1>NUESTRA FLOTA</h1>
+
+    <!-- 1. Composición de Unidades -->
+    <div class="info-section">
+      <div class="info-text">
+        
+        <h3> <i class="fa-solid fa-truck-moving" style="color: #003366;"></i> COMPOSICION DE UNIDADES</h3>
+        <p>Nuestra flota está compuesta por vehículos preparados para brindar servicios tanto de larga como de corta distancia, cubriendo diferentes tipos de operaciones logísticas y necesidades de transporte.</p>
+        <ul>
+          <li>Camiones de alto porte</li>
+          <li>Arañas y porta-jumbo</li>
+          <li>Chasis baranda volcable y Chasis con caja Siders</li>
+          <li>Furgones refrigerados</li>
+          <li>Semirremolques playos y con baranda volcable</li>
+        </ul>
+        <p>Gracias a esta diversidad de unidades, podemos adaptarnos a distintos tipos de carga, garantizando eficiencia, seguridad y cumplimiento en cada entrega.</p>
+      </div>
+      <div class="info-img">
+        <img src="flota.png" alt="Nuestra flota de camiones y vehículos logísticos" loading="lazy">
+      </div>
+    </div>
+
+    <!-- 2. Estado de las Unidades -->
+    <div class="info-section">
+      <div class="info-text">
+        <h3><i class="fa-solid fa-gear"style="color: #003366;"></i> ESTADO Y MANTENIMIENTO</h3>
+        <p>Contamos con una flota moderna, compuesta por unidades modelo 2010 en adelante, todas en excelente estado operativo y habilitadas para el ingreso y movimiento en las principales plantas y centros logísticos del país.</p>
+        <p>Aplicamos un plan de mantenimiento predictivo y preventivo, con inspecciones y reparaciones programadas que nos permiten anticipar fallas, minimizar tiempos de inactividad y evitar retrasos en las entregas, asegurando un flujo operativo continuo y confiable.</p>
+      </div>
+      <div class="info-img">
+        <img src="mecanica.png" alt="Nuestra flota de camiones y vehículos logísticos" loading="lazy">
+      </div>
+    </div>
+
+    <!-- 3. Seguridad Operativa -->
+    <div class="info-section">
+      <div class="info-text">
+        <h3><i class="fa-solid fa-shield-halved" style="color: #003366;"></i> SEGURIDAD OPERATIVA</h3>
+        <p>Todas nuestras unidades cuentan con sistemas de monitoreo satelital en tiempo real, lo que nos permite controlar la ubicación, velocidad, paradas y desvíos de ruta durante todo el trayecto.</p>
+        <p>El seguimiento se realiza mediante plataformas de rastreo GPS y comunicación constante con el área de tráfico, asegurando supervisión continua y respuesta inmediata ante cualquier eventualidad.</p>
+        <ul>
+          <li>Control en línea del estado de la flota</li>
+          <li>Alertas automáticas ante detenciones no programadas, aperturas de puertas o desvíos de ruta</li>
+          <li>Historial detallado de recorridos y tiempos de tránsito</li>
+          <li>Reportes automáticos de rendimiento y seguridad</li>
+        </ul>
+        <p>Nuestros conductores reciben capacitaciones permanentes en conducción segura, protocolos de emergencia y normativa vial, fomentando una cultura de prevención y responsabilidad en cada operación.</p>
+        <p>Gracias a esta política integral de seguridad operativa, garantizamos la trazabilidad de las cargas, la protección de los activos y la tranquilidad de nuestros clientes durante todo el proceso logístico.</p>
+      </div>
+          <div class="info-img">
+        <img src="SATELITE.png" alt="Nuestra flota de camiones y vehículos logísticos" loading="lazy">
+      </div>
+    </div>
+        <!-- 3. Seguridad Operativa -->
+    <div class="info-section">
+      <div class="info-text">
+        <h3><i class="fa-solid fa-shield-halved" style="color: #003366;"></i> SEGURIDAD OPERATIVA</h3>
+        <p>Todas nuestras unidades cuentan con sistemas de monitoreo satelital en tiempo real, lo que nos permite controlar la ubicación, velocidad, paradas y desvíos de ruta durante todo el trayecto.</p>
+        <p>El seguimiento se realiza mediante plataformas de rastreo GPS y comunicación constante con el área de tráfico, asegurando supervisión continua y respuesta inmediata ante cualquier eventualidad.</p>
+        <ul>
+          <li>Control en línea del estado de la flota</li>
+          <li>Alertas automáticas ante detenciones no programadas, aperturas de puertas o desvíos de ruta</li>
+          <li>Historial detallado de recorridos y tiempos de tránsito</li>
+          <li>Reportes automáticos de rendimiento y seguridad</li>
+        </ul>
+        <p>Nuestros conductores reciben capacitaciones permanentes en conducción segura, protocolos de emergencia y normativa vial, fomentando una cultura de prevención y responsabilidad en cada operación.</p>
+        <p>Gracias a esta política integral de seguridad operativa, garantizamos la trazabilidad de las cargas, la protección de los activos y la tranquilidad de nuestros clientes durante todo el proceso logístico.</p>
+      </div>
+          <div class="info-img">
+        <img src="SATELITE.png" alt="Nuestra flota de camiones y vehículos logísticos" loading="lazy">
+      </div>
+    </div>
+  `;
+  break;
+
+
+
+case 'comex':
+  html = `
+    <h1>DEPARTAMENTO DE COMEX</h1>
+
+    <!-- 1. Introducción -->
+    <div class="info-section">
+      <div class="info-text">
+        <h3><i class="fa-solid fa-earth-americas"style="color: #003366;"></i> Logística Internacional</h3>
+        <p>Facilitamos operaciones de comercio exterior, asegurando eficiencia y cumplimiento en cada etapa.</p>
+      </div>
+    </div>
+
+    <!-- 2. Exportación -->
+    <div class="info-section">
+          <div class="info-img">
+        <img src="comex.jpg" alt="Departamento de Comex" loading="lazy">
+      </div>
+      <div class="info-text">
+        <h3><i class="fa-solid fa-ship"style="color: #003366;"></i> Exportación</h3>
+        <ul>
+          <li>Asesoramiento integral.</li>
+          <li>Inscripción en el registro de exportadores e importadores.</li>
+          <li>Asesoramiento aduanero y clasificación arancelaria.</li>
+          <li>Oficialización de permisos de embarque.</li>
+          <li>Confección, presentación de documentación aduanera y liberación de la mercadería.</li>
+          <li>Coordinación, supervisión y control de cargas.</li>
+          <li>Envío de muestras.</li>
+          <li>Autorizaciones, certificaciones y gestión de documentos relativos a la operación.</li>
+          <li>Consolidación en planta, depósitos fiscales o terminales de carga.</li>
+          <li>Negociación de fletes marítimos, aéreos, terrestres y multimodales, y reserva de bodega.</li>
+          <li>Transporte desde fábrica o depósito hasta puerto o aeropuerto.</li>
+          <li>Manejo de contenedores: alquiler, retiro, transporte, consolidado y entrega en la terminal portuaria.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 3. Importación -->
+    <div class="info-section">
+      <div class="info-img">
+        <img src="comex 2.jpg" alt="Departamento de Comex" loading="lazy">
+      </div>
+      <div class="info-text">
+        <h3><i class="fa-solid fa-ship"style="color: #003366;"></i> Importación</h3>
+        <ul>
+          <li>Asesoramiento integral.</li>
+          <li>Inscripción en el registro de exportadores e importadores.</li>
+          <li>Confección de costos de importación.</li>
+          <li>Clasificación arancelaria y valoración aduanera.</li>
+          <li>Oficialización y tramitación de todo tipo de destinaciones (SIMI, importaciones a consumo, temporales, traslados, reimportaciones, etc.).</li>
+          <li>Seguimiento de operaciones temporales: control de saldos, vencimientos, presentación de prórrogas, etc.</li>
+          <li>Negociación de fletes marítimos, aéreos, terrestres y reserva de bodega.</li>
+        </ul>
+      </div>
+    </div>`;
+  break;
+
+
+    case 'futuro':
+      html = `
+        <h1>HACIA DONDE VAMOS</h1>
+        <div class="info-section">
+          <div class="info-text">
+            <h3>Visión a futuro</h3>
+            <p>Nos proyectamos hacia un crecimiento sostenible, integrando tecnología y compromiso ambiental en cada proceso.</p>
+          </div>
+          <div class="info-img"><img src="futuro.jpg" alt="Futuro"></div>
+        </div>`;
+      break;
+
+    default:
+      html = `<h1>Selecciona una sección</h1><p>Haz clic en los botones de la izquierda para ver la información.</p>`;
+  }
+
+  // reemplazamos contenido
+  contenido.innerHTML = html;
+}
+</script>
+</body>
+</html>
