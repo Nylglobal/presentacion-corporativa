@@ -133,6 +133,59 @@
     display:block;
   }
 
+  /* ===== GALERIA FLOTA ===== */
+.galeria-flota{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:12px;
+  margin-top:20px;
+}
+
+.galeria-flota img{
+  width:100%;
+  height:140px;
+  object-fit:cover;
+  border-radius:8px;
+  cursor:pointer;
+  transition: transform .2s, box-shadow .2s;
+}
+
+.galeria-flota img:hover{
+  transform:scale(1.05);
+  box-shadow:0 4px 12px rgba(0,0,0,.3);
+}
+
+/* ===== MODAL ===== */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.8);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+
+.modal img{
+  max-width:90%;
+  max-height:90%;
+  border-radius:10px;
+  box-shadow:0 0 25px rgba(255,255,255,.3);
+}
+
+.modal button{
+  position:absolute;
+  top:20px;
+  right:20px;
+  font-size:20px;
+  background:#fff;
+  border:none;
+  padding:8px 14px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+
   /* pequeño responsive */
   @media (max-width:900px){
     .contenedor{ flex-direction:column; }
@@ -140,6 +193,7 @@
     .menu button{ flex:0 0 auto; width:auto; white-space:nowrap; }
     .info-img{ width:140px; }
   }
+  
 </style>
 </head>
 <body>
@@ -168,6 +222,12 @@
       <p>Haz clic en los botones de la izquierda para ver la información relacionada en este panel.</p>
     </main>
   </div>
+  <!-- MODAL GALERÍA FLOTA -->
+<div id="modalFlota" class="modal" onclick="cerrarModal()">
+  <button onclick="cerrarModal()">✖</button>
+  <img id="modalImg">
+</div>
+
 
 <script>
 /* ======================
@@ -394,6 +454,21 @@ case 'flota':
       <div class="info-img">
         <img src="flota.png" alt="Nuestra flota de camiones y vehículos logísticos" loading="lazy">
       </div>
+      <div class="galeria-flota">
+  <img src="flota1.jpg" onclick="abrirModal(this.src)">
+  <img src="flota2.jpg" onclick="abrirModal(this.src)">
+  <img src="flota3.jpg" onclick="abrirModal(this.src)">
+  <img src="flota4.jpg" onclick="abrirModal(this.src)">
+  <img src="flota5.jpg" onclick="abrirModal(this.src)">
+  <img src="flota6.jpg" onclick="abrirModal(this.src)">
+  <img src="flota7.jpg" onclick="abrirModal(this.src)">
+  <img src="flota8.jpg" onclick="abrirModal(this.src)">
+  <img src="flota9.jpg" onclick="abrirModal(this.src)">
+  <img src="flota10.jpg" onclick="abrirModal(this.src)">
+  <img src="flota11.jpg" onclick="abrirModal(this.src)">
+  <img src="flota12.jpg" onclick="abrirModal(this.src)">
+</div>
+
     </div>
 
     <!-- 2. Estado de las Unidades -->
@@ -527,6 +602,18 @@ case 'comex':
   // reemplazamos contenido
   contenido.innerHTML = html;
 }
+
+  /* ===== MODAL FLOTA ===== */
+function abrirModal(src){
+  document.getElementById("modalImg").src = src;
+  document.getElementById("modalFlota").style.display = "flex";
+}
+
+function cerrarModal(){
+  document.getElementById("modalFlota").style.display = "none";
+}
+
 </script>
 </body>
 </html>
+
