@@ -434,27 +434,46 @@ case 'servicios':
 
 case 'flota':
   html = `
-    <h1>NUESTRA FLOTA</h1>
+<h1>NUESTRA FLOTA</h1>
 
-    <!-- 1. Composición de Unidades -->
-    <div class="info-section">
-      <div class="info-text">
-        
-        <h3> <i class="fa-solid fa-truck-moving" style="color: #003366;"></i> COMPOSICION DE UNIDADES</h3>
-        <p>Nuestra flota está compuesta por vehículos preparados para brindar servicios tanto de larga como de corta distancia, cubriendo diferentes tipos de operaciones logísticas y necesidades de transporte.</p>
-        <ul>
-          <li>Camiones de alto porte</li>
-          <li>Arañas y porta-jumbo</li>
-          <li>Chasis baranda volcable y Chasis con caja Siders</li>
-          <li>Furgones refrigerados</li>
-          <li>Semirremolques playos y con baranda volcable</li>
-        </ul>
-        <p>Gracias a esta diversidad de unidades, podemos adaptarnos a distintos tipos de carga, garantizando eficiencia, seguridad y cumplimiento en cada entrega.</p>
-      </div>
-      <div class="info-img">
-        <img src="flota.png" alt="Nuestra flota de camiones y vehículos logísticos" loading="lazy">
-      </div>
-      <div class="galeria-flota">
+<!-- 1. Composición de Unidades -->
+<div class="info-section">
+
+  <div class="info-text">
+    <h3>
+      <i class="fa-solid fa-truck-moving" style="color:#003366;"></i> 
+      COMPOSICIÓN DE UNIDADES
+    </h3>
+
+    <p>
+      Nuestra flota está compuesta por vehículos preparados para brindar servicios tanto de larga como de corta distancia, cubriendo diferentes tipos de operaciones logísticas y necesidades de transporte.
+    </p>
+
+    <ul>
+      <li>Camiones de alto porte</li>
+      <li>Arañas y porta-jumbo</li>
+      <li>Chasis baranda volcable y chasis con caja Siders</li>
+      <li>Furgones refrigerados</li>
+      <li>Semirremolques playos y con baranda volcable</li>
+    </ul>
+
+    <p>
+      Gracias a esta diversidad de unidades, podemos adaptarnos a distintos tipos de carga, garantizando eficiencia, seguridad y cumplimiento en cada entrega.
+    </p>
+  </div>
+
+  <div class="info-img">
+    <img src="flota.png" alt="Nuestra flota de camiones y vehículos logísticos" loading="lazy">
+  </div>
+
+</div>
+
+<!-- Galería full width -->
+<h3 style="margin-top:30px;color:#003366;">
+  <i class="fa-solid fa-images"></i> GALERÍA DE UNIDADES
+</h3>
+
+<div class="galeria-flota">
   <img src="flota1.jpg" onclick="abrirModal(this.src)">
   <img src="flota2.jpg" onclick="abrirModal(this.src)">
   <img src="flota3.jpg" onclick="abrirModal(this.src)">
@@ -469,7 +488,6 @@ case 'flota':
   <img src="flota12.jpg" onclick="abrirModal(this.src)">
 </div>
 
-    </div>
 
     <!-- 2. Estado de las Unidades -->
     <div class="info-section">
@@ -616,4 +634,5 @@ function cerrarModal(){
 </script>
 </body>
 </html>
+
 
